@@ -1,31 +1,45 @@
+"use client";
+
+import { useState } from "react";
 import { produtos } from "@/lib/produtos";
+import { useCart } from "@/lib/cart-context";
+
+function formatarPreco(valor: number) {
+  return valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
 
 export default function Home() {
+  const { adicionar } = useCart();
+  const [adicionadoId, setAdicionadoId] = useState<string | null>(null);
+
+  function handleAdicionar(produto: (typeof produtos)[number]) {
+    adicionar(produto);
+    setAdicionadoId(produto.id);
+    setTimeout(() => setAdicionadoId(null), 1500);
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
-          <span className="text-xl font-bold tracking-tight">
-            PetRocker 🤘🐾
-          </span>
-        </div>
-      </header>
-
-      <main className="flex-1">
-        <section className="pt-24 pb-12 px-4 text-center bg-gradient-to-b from-gray-800 to-gray-900">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
-            O Rock que seu Pet Merece
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
-            Tudo para o seu pet rock viver com estilo, atitude e muito
-            rock'n'roll.
-          </p>
-          <a
-            href="#produtos"
-            className="mt-8 inline-block rounded-lg bg-red-800 hover:bg-red-700 px-8 py-3 text-sm font-semibold transition-colors"
-          >
-            Ver Produtos
-          </a>
+      <main className="flex-1 pt-16">
+        <section className="pb-12 px-4 text-center bg-gradient-to-b from-gray-800 to-gray-900">
+          <div className="pt-24">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+              O Rock que seu Pet Merece
+            </h1>
+            <p className="mt-4 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+              Tudo para o seu pet rock viver com estilo, atitude e muito
+              rock&apos;n&apos;roll.
+            </p>
+            <a
+              href="#produtos"
+              className="mt-8 inline-block rounded-lg bg-red-800 hover:bg-red-700 px-8 py-3 text-sm font-semibold transition-colors"
+            >
+              Ver Produtos
+            </a>
+          </div>
         </section>
 
         <section
@@ -46,7 +60,7 @@ export default function Home() {
                   {p.descricao}
                 </p>
                 <p className="text-xl font-bold mt-4 text-red-400">
-                  R$ {p.preco.toFixed(2).replace(".", ",")}
+                  {formatarPreco(p.preco)}
                 </p>
                 {!p.emEstoque && (
                   <span className="mt-2 inline-block rounded bg-red-900/60 text-red-300 text-xs font-semibold px-2.5 py-1 text-center">
@@ -55,13 +69,16 @@ export default function Home() {
                 )}
                 <button
                   disabled={!p.emEstoque}
+                  onClick={() => handleAdicionar(p)}
                   className={`mt-4 w-full rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
                     p.emEstoque
                       ? "bg-red-800 hover:bg-red-700 text-white"
                       : "bg-gray-700 text-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  Adicionar ao carrinho
+                  {adicionadoId === p.id
+                    ? "✓ Adicionado!"
+                    : "Adicionar ao carrinho"}
                 </button>
               </div>
             ))}

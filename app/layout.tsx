@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CartProvider } from "@/lib/cart-context";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "PetRocker 🤘🐾 — O Rock que seu Pet Merece",
@@ -14,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="bg-gray-900 text-gray-100 antialiased">{children}</body>
+      <body className="bg-gray-900 text-gray-100 antialiased">
+        <CartProvider>
+          <Header />
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }
