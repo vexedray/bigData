@@ -1,100 +1,76 @@
-import Image from "next/image";
+import { produtos } from "@/lib/produtos";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen flex flex-col">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+          <span className="text-xl font-bold tracking-tight">
+            PetRocker 🤘🐾
+          </span>
         </div>
+      </header>
+
+      <main className="flex-1">
+        <section className="pt-24 pb-12 px-4 text-center bg-gradient-to-b from-gray-800 to-gray-900">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight">
+            O Rock que seu Pet Merece
+          </h1>
+          <p className="mt-4 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+            Tudo para o seu pet rock viver com estilo, atitude e muito
+            rock'n'roll.
+          </p>
+          <a
+            href="#produtos"
+            className="mt-8 inline-block rounded-lg bg-red-800 hover:bg-red-700 px-8 py-3 text-sm font-semibold transition-colors"
+          >
+            Ver Produtos
+          </a>
+        </section>
+
+        <section
+          id="produtos"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+        >
+          <h2 className="text-2xl font-bold mb-8">Nossos Produtos</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {produtos.map((p) => (
+              <div
+                key={p.id}
+                className="rounded-xl bg-gray-800 border border-gray-700 shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-200 p-6 flex flex-col"
+              >
+                <div className="text-6xl text-center mb-4">{p.emoji}</div>
+                <h3 className="font-bold text-lg">{p.nome}</h3>
+                <p className="text-sm text-gray-500 mt-1">{p.categoria}</p>
+                <p className="text-sm text-gray-400 mt-2 flex-1">
+                  {p.descricao}
+                </p>
+                <p className="text-xl font-bold mt-4 text-red-400">
+                  R$ {p.preco.toFixed(2).replace(".", ",")}
+                </p>
+                {!p.emEstoque && (
+                  <span className="mt-2 inline-block rounded bg-red-900/60 text-red-300 text-xs font-semibold px-2.5 py-1 text-center">
+                    Sem estoque
+                  </span>
+                )}
+                <button
+                  disabled={!p.emEstoque}
+                  className={`mt-4 w-full rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                    p.emEstoque
+                      ? "bg-red-800 hover:bg-red-700 text-white"
+                      : "bg-gray-700 text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  Adicionar ao carrinho
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+        Feito com ❤️ na aula de IA do SENAI SC
       </footer>
     </div>
   );
