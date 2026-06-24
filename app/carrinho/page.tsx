@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 
 function formatarPreco(valor: number) {
@@ -11,7 +13,10 @@ function formatarPreco(valor: number) {
 }
 
 export default function Carrinho() {
+  const router = useRouter();
   const { items, remover, atualizarQuantidade, total } = useCart();
+  const [finalizando, setFinalizando] = useState(false);
+  const [erro, setErro] = useState("");
 
   if (items.length === 0) {
     return (
@@ -113,12 +118,45 @@ export default function Carrinho() {
             Continuar comprando
           </Link>
           <button
-            onClick={() => alert("Checkout em breve!")}
-            className="flex-1 rounded-lg bg-red-800 hover:bg-red-700 px-6 py-3 text-sm font-semibold transition-colors"
+            onClick={async () => {
+              setFinalizando(true);
+              setErro("");
+              try {
+                const payload = {
+                  items: items.map((i) => ({
+                    nome: i.produto.nome,
+                    preco: i.produto.preco,
+                    quantidade: i.quantidade,
+                  })),
+                  total,
+                };
+                const res = await fetch("/api/checkout", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(payload),
+                });
+                if (!res.ok) {
+                  const data = await res.json();
+                  throw new Error(data.error || "Erro ao finalizar compra");
+                }
+                const data = await res.json();
+                router.push(data.url + "?pedidoId=" + data.pedidoId + "&total=" + data.total);
+              } catch (e: unknown) {
+                const msg =
+                  e instanceof Error ? e.message : "Erro inesperado";
+                setErro(msg);
+                setFinalizando(false);
+              }
+            }}
+            disabled={finalizando}
+            className="flex-1 rounded-lg bg-red-800 hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 px-6 py-3 text-sm font-semibold transition-colors"
           >
-            Finalizar compra
+            {finalizando ? "Processando..." : "Finalizar compra"}
           </button>
         </div>
+        {erro && (
+          <p className="mt-4 text-sm text-red-400 text-center">{erro}</p>
+        )}
       </main>
     </div>
   );
