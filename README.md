@@ -41,7 +41,7 @@ Pet shop temático de rock especializado em pet rocks (pedras de estimação) e 
 bigdata/
 ├── app/
 │   ├── api/
-│   │   └── checkout/route.ts    — Rota POST que gera pedido simulado
+│   │   └── checkout/route.ts    — Rota POST que cria checkout na InfinitePay (ou fallback simulado)
 │   ├── carrinho/page.tsx        — Página do carrinho de compras
 │   ├── checkout-simulado/page.tsx — Formulário de checkout simulado
 │   ├── obrigado/page.tsx        — Página de confirmação pós-compra

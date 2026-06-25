@@ -140,7 +140,11 @@ export default function Carrinho() {
                   throw new Error(data.error || "Erro ao finalizar compra");
                 }
                 const data = await res.json();
-                router.push(data.url + "?pedidoId=" + data.pedidoId + "&total=" + data.total);
+                if (data.url.startsWith("/")) {
+                  router.push(data.url + "?pedidoId=" + data.pedidoId + "&total=" + data.total);
+                } else {
+                  router.push(data.url);
+                }
               } catch (e: unknown) {
                 const msg =
                   e instanceof Error ? e.message : "Erro inesperado";

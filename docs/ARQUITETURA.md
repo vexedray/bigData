@@ -16,22 +16,27 @@
  │ (carrinho/   │                         │  (POST)          │
  │  page.tsx)   │                         └────────┬─────────┘
  └──────────────┘                                  │
-                                                   │ retorna { url,
-                                                   │   pedidoId, total }
-                                                   ▼
-                                          ┌──────────────────┐
-                                          │ Checkout Simulado │
-                                          │ (checkout-simulado│
-                                          │  /page.tsx)      │
-                                          └────────┬─────────┘
-                                                   │ Confirmar e pagar
-                                                   │ (1,5s loading)
-                                                   ▼
-                                          ┌──────────────────┐
-                                          │    Obrigado      │
-                                          │ (obrigado/       │
-                                          │  page.tsx)       │
-                                          └──────────────────┘
+                                                    │ retorna { url,
+                                                    │   pedidoId, total }
+                                                    ▼
+                                           ┌─────────────────────────────────────┐
+                                           │ INFINITEPAY_HANDLE configurado?     │
+                                           │  Sim ─→ redireciona para URL do     │
+                                           │          InfinitePay (checkout.     │
+                                           │          infinitepay.com.br)        │
+                                           │          ─→ após pagamento →        │
+                                           │            /obrigado                │
+                                           │                                     │
+                                           │  Não ─→ retorna                     │
+                                           │          "/checkout-simulado"       │
+                                           └────────────────┬────────────────────┘
+                                                            │
+                                                            ▼
+                                                   ┌──────────────────┐
+                                                   │    Obrigado      │
+                                                   │ (obrigado/       │
+                                                   │  page.tsx)       │
+                                                   └──────────────────┘
 ```
 
 ## Onde o componente de IA se encaixa

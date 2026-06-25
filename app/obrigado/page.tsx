@@ -7,7 +7,8 @@ import { useCart } from "@/lib/cart-context";
 
 function ObrigadoContent() {
   const searchParams = useSearchParams();
-  const pedidoId = searchParams.get("pedidoId") || "";
+  const pedidoId = searchParams.get("pedidoId") || searchParams.get("order_nsu") || "";
+  const slug = searchParams.get("slug") || "";
   const { limpar } = useCart();
 
   return (
@@ -19,6 +20,11 @@ function ObrigadoContent() {
           <p className="text-gray-400">
             Pedido{" "}
             <span className="font-mono text-red-400">{pedidoId}</span>
+          </p>
+        )}
+        {slug && (
+          <p className="text-xs text-gray-600">
+            Fatura: {slug}
           </p>
         )}
         <Link
