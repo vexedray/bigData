@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PetRocker 🤘🐾
 
-## Getting Started
+Pet shop temático de rock especializado em pet rocks (pedras de estimação) e acessórios rock'n'roll. Oferecemos uma experiência personalizada com ranqueamento inteligente de produtos baseado nas preferências do usuário.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Como rodar localmente
+
+1. `git clone <url-do-repositorio>`
+2. `cd bigdata`
+3. `npm install`
+4. `cp .env.example .env.local` (e preencher as variáveis)
+5. `npm run dev`
+6. Abrir [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Variáveis de ambiente
+
+| Nome | Descrição | Exemplo |
+|------|-----------|---------|
+| `NEXT_PUBLIC_APP_NAME` | Nome público da aplicação | `PetRocker` |
+| `INFINITEPAY_HANDLE` | Identificador da conta InfinitePay (comentado — opcional) | `seu_handle_aqui` |
+
+---
+
+## Componente de IA
+
+**Ranqueador Inteligente de Produtos**
+
+- **Paradigma:** Baseado em regras com feedback implícito do usuário.
+- **Representação do conhecimento:** Mapa de preferências armazenado no `sessionStorage` do navegador, contendo contagens de cliques por categoria e histórico de produtos clicados.
+- **Funcionamento:** A cada interação do usuário com um card do catálogo, o sistema registra a categoria e o produto. Ao ativar o modo "Ver por relevância", um algoritmo de score calcula a afinidade de cada produto com base nas categorias mais clicadas (+3 para top 2, +2 para categoria clicada, +1 para produto revisitado, +0,5 por clique extra). Os produtos são reordenados do maior para o menor score, com desempate por ordem alfabética.
+- **Persistência:** Os dados permanecem apenas durante a sessão do navegador (sessionStorage), sem envio para servidor.
+
+---
+
+## Estrutura de pastas
+
+```
+bigdata/
+├── app/
+│   ├── api/
+│   │   └── checkout/route.ts    — Rota POST que gera pedido simulado
+│   ├── carrinho/page.tsx        — Página do carrinho de compras
+│   ├── checkout-simulado/page.tsx — Formulário de checkout simulado
+│   ├── obrigado/page.tsx        — Página de confirmação pós-compra
+│   ├── globals.css              — Estilos globais Tailwind
+│   ├── layout.tsx               — Layout raiz (CartProvider + Header)
+│   └── page.tsx                 — Página inicial com catálogo
+├── components/
+│   ├── CatalogoPersonalizado.tsx — Catálogo com toggle de ranqueamento
+│   └── Header.tsx               — Header fixo com ícone do carrinho
+├── lib/
+│   ├── cart-context.tsx         — Contexto do carrinho (Provider + useCart)
+│   ├── produtos.ts              — Array com 16 produtos do catálogo
+│   └── ranqueador.ts            — Lógica de ranqueamento inteligente
+├── types/
+│   └── index.ts                 — Interface Produto
+├── docs/
+│   ├── ARQUITETURA.md           — Documentação da arquitetura
+│   └── COMPONENTE_IA.md         — Detalhamento do componente de IA
+├── .env.example                 — Exemplo de variáveis de ambiente
+├── .gitignore                   — Arquivos ignorados pelo git
+├── package.json
+├── tailwind.config.ts
+└── tsconfig.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Integrantes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Nome1
+- Nome2
+- Nome3
+- Nome4
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Créditos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Disciplina de Big Data, Analytics e IA — SENAI SC — Prof. Filipe Ribeiro da Cas**
