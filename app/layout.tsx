@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { Header } from "@/components/Header";
-import { ChatBot } from "@/components/ChatBot";
 
 export const metadata: Metadata = {
   title: "PetRocker 🤘🐾 — O Rock que seu Pet Merece",
@@ -21,7 +20,6 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           {children}
-          <ChatBot />
         </CartProvider>
       </body>
     </html>
