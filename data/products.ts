@@ -1,4 +1,4 @@
-import { Produto } from "@/types";
+import type { Produto } from "@/types";
 
 export const produtos: Produto[] = [
   {
@@ -9,6 +9,11 @@ export const produtos: Produto[] = [
     descricao: "Petiscos minerais ricos em cálcio para seu pet rock crescer forte.",
     emoji: "🪨",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Peso líquido", valor: "500g" },
+      { chave: "Composição", valor: "Cálcio, Magnésio, Zinco" },
+      { chave: "Validade", valor: "12 meses" },
+    ],
   },
   {
     id: "2",
@@ -18,15 +23,25 @@ export const produtos: Produto[] = [
     descricao: "Deixa a superfície do seu pet rock com brilho intenso e proteção anti-poeira.",
     emoji: "🧴",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Volume", valor: "250ml" },
+      { chave: "pH", valor: "Neutro (7.0)" },
+      { chave: "Fragrância", valor: "Âmbar mineral" },
+    ],
   },
   {
     id: "3",
     nome: "Guitarra de Brinquedo Squeak",
     categoria: "Brinquedos",
     preco: 59.9,
-    descricao: "Guitarra macia que range ao apertar — diversão garantida para seu rockeiro.",
+    descricao: "Guitarra macia que range ao apertar - diversão garantida para seu rockeiro.",
     emoji: "🎸",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Material", valor: "Silicone atóxico" },
+      { chave: "Dimensões", valor: "20 x 8 cm" },
+      { chave: "Som", valor: "Squeak embutido" },
+    ],
   },
   {
     id: "4",
@@ -36,6 +51,11 @@ export const produtos: Produto[] = [
     descricao: "Jaqueta de couro sintético com spikes nos ombros. Tamanho pet rock.",
     emoji: "👕",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Material", valor: "Couro sintético" },
+      { chave: "Tamanho", valor: "PP (pet rock)" },
+      { chave: "Detalhes", valor: "Spikes metálicos nos ombros" },
+    ],
   },
   {
     id: "5",
@@ -45,6 +65,11 @@ export const produtos: Produto[] = [
     descricao: "Complexo vitamínico mineral para pet rocks exigentes. 30 cápsulas.",
     emoji: "💎",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Quantidade", valor: "30 cápsulas" },
+      { chave: "Principais nutrientes", valor: "Ferro, Cálcio, Vitamina D" },
+      { chave: "Modo de usar", valor: "1 cápsula ao dia" },
+    ],
   },
   {
     id: "6",
@@ -54,6 +79,11 @@ export const produtos: Produto[] = [
     descricao: "Osso em formato de microfone para o rockstar dentro do seu pet.",
     emoji: "🎤",
     emEstoque: false,
+    especificacoes: [
+      { chave: "Material", valor: "Borracha natural" },
+      { chave: "Dimensões", valor: "15 x 5 cm" },
+      { chave: "Som", valor: "Range ao apertar" },
+    ],
   },
   {
     id: "7",
@@ -63,6 +93,11 @@ export const produtos: Produto[] = [
     descricao: "Coleira ajustável com spikes metálicos. Estilo punk rock.",
     emoji: "⛓️",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Material", valor: "Couro sintético + metal" },
+      { chave: "Ajuste", valor: "20 a 30 cm" },
+      { chave: "Spikes", valor: "8 spikes dourados" },
+    ],
   },
   {
     id: "8",
@@ -72,6 +107,11 @@ export const produtos: Produto[] = [
     descricao: "Óculos escuros estilo aviador para seu pet arrasar no visual.",
     emoji: "🕶️",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Estilo", valor: "Aviador" },
+      { chave: "Proteção UV", valor: "Sim (UV400)" },
+      { chave: "Largura", valor: "10 cm" },
+    ],
   },
   {
     id: "9",
@@ -81,6 +121,11 @@ export const produtos: Produto[] = [
     descricao: "Ração premium com minerais essenciais para o dia a dia do seu pet rock.",
     emoji: "🍖",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Peso líquido", valor: "1kg" },
+      { chave: "Composição", valor: "Minerais, fibras e proteínas" },
+      { chave: "Indicação", valor: "Todas as idades" },
+    ],
   },
   {
     id: "10",
@@ -90,6 +135,11 @@ export const produtos: Produto[] = [
     descricao: "Petisco fortificado para pet rocks que precisam de nutrição extra.",
     emoji: "🦴",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Peso líquido", valor: "200g" },
+      { chave: "Cálcio", valor: "150mg por porção" },
+      { chave: "Ferro", valor: "5mg por porção" },
+    ],
   },
   {
     id: "11",
@@ -99,6 +149,11 @@ export const produtos: Produto[] = [
     descricao: "Pacote com 30 unidades para limpeza rápida do seu pet rock.",
     emoji: "🧻",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Unidades", valor: "30 toalhas" },
+      { chave: "Composição", valor: "Fibra vegetal + loção suave" },
+      { chave: "Fragrância", valor: "Neutra" },
+    ],
   },
   {
     id: "12",
@@ -108,6 +163,11 @@ export const produtos: Produto[] = [
     descricao: "Cera enceradeira que protege e dá brilho extra ao seu pet rock.",
     emoji: "✨",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Volume", valor: "200ml" },
+      { chave: "Duração", valor: "Até 30 dias" },
+      { chave: "Composição", valor: "Cera de carnaúba + silicones" },
+    ],
   },
   {
     id: "13",
@@ -117,6 +177,11 @@ export const produtos: Produto[] = [
     descricao: "Bola leve para o seu pet rock rolar e se divertir como um campeão.",
     emoji: "⚽",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Diâmetro", valor: "12 cm" },
+      { chave: "Material", valor: "PVC atóxico" },
+      { chave: "Peso", valor: "150g" },
+    ],
   },
   {
     id: "14",
@@ -126,15 +191,25 @@ export const produtos: Produto[] = [
     descricao: "Mini bateria com sons de rock para o músico dentro do seu pet.",
     emoji: "🥁",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Dimensões", valor: "25 x 15 x 5 cm" },
+      { chave: "Sons", valor: "5 ritmos de rock" },
+      { chave: "Alimentação", valor: "2 pilhas AA (não inclusas)" },
+    ],
   },
   {
     id: "15",
     nome: "Bandana Vermelha Rocker",
     categoria: "Acessórios",
     preco: 29.9,
-    descricao: "Bandana vermelha de bandana para seu pet rock virar um astro do rock.",
+    descricao: "Bandana vermelha para seu pet rock virar um astro do rock.",
     emoji: "🧣",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Material", valor: "Algodão 100%" },
+      { chave: "Dimensões", valor: "50 x 50 cm" },
+      { chave: "Estampa", valor: "Listras rocker" },
+    ],
   },
   {
     id: "16",
@@ -144,5 +219,10 @@ export const produtos: Produto[] = [
     descricao: "Pulseira ajustável com spikes de metal para o visual punk rock.",
     emoji: "📿",
     emEstoque: true,
+    especificacoes: [
+      { chave: "Material", valor: "Couro + spikes de metal" },
+      { chave: "Ajuste", valor: "15 a 25 cm" },
+      { chave: "Spikes", valor: "12 spikes prateados" },
+    ],
   },
 ];

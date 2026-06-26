@@ -1,5 +1,11 @@
 import { NextRequest } from "next/server";
 
+interface CheckoutItem {
+  nome: string;
+  preco: number;
+  quantidade: number;
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
@@ -16,24 +22,28 @@ export async function POST(request: NextRequest) {
     const origin = request.headers.get("origin") || request.nextUrl.origin;
 
     try {
-      const infinitepayRes = await fetch(
-        "https://api.checkout.infinitepay.io/links",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            handle,
-            redirect_url: `${origin}/obrigado`,
-            webhook_url: `${origin}/api/webhook`,
-            order_nsu: pedidoId,
-            items: body.items.map((i: { nome: string; preco: number; quantidade: number }) => ({
-              quantity: i.quantidade,
-              price: Math.round(i.preco * 100),
-              description: i.nome,
-            })),
+      const infinitepayRes = await fetch("https://api.checkout.infinitepay.io/links", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          handle,
+          redirect_url: `${origin}/obrigado`,
+          webhook_url: `${origin}/api/webhook`,
+          order_nsu: pedidoId,
+          items: body.items.map((item: CheckoutItem) => {
+            const basePriceCents = Math.round(item.preco * 100);
+            const price = body.cupom === "ROCK10"
+              ? Math.round(basePriceCents * 0.9)
+              : basePriceCents;
+
+            return {
+              quantity: item.quantidade,
+              price,
+              description: item.nome,
+            };
           }),
-        },
-      );
+        }),
+      });
 
       if (!infinitepayRes.ok) {
         const errText = await infinitepayRes.text();
@@ -59,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Fallback simulado quando INFINITEPAY_HANDLE não está configurado
+  // Fallback simulado quando INFINITEPAY_HANDLE não está configurado.
   return Response.json({
     url: "/checkout-simulado",
     pedidoId,

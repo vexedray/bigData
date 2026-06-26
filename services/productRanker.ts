@@ -26,7 +26,9 @@ export function iniciarSessao(): Preferencias {
 
 export function carregarPreferencias(): Preferencias {
   if (typeof window === "undefined") return iniciarSessao();
+
   const raw = sessionStorage.getItem("prefs");
+
   if (raw) {
     try {
       return JSON.parse(raw) as Preferencias;
@@ -34,6 +36,7 @@ export function carregarPreferencias(): Preferencias {
       /* fallback */
     }
   }
+
   const prefs = iniciarSessao();
   salvarPreferencias(prefs);
   return prefs;
@@ -44,10 +47,7 @@ export function salvarPreferencias(prefs: Preferencias): void {
   sessionStorage.setItem("prefs", JSON.stringify(prefs));
 }
 
-export function registrarClique(
-  produtoId: string,
-  categoria: string,
-): void {
+export function registrarClique(produtoId: string, categoria: string): void {
   const prefs = carregarPreferencias();
   prefs.categorias[categoria] = (prefs.categorias[categoria] || 0) + 1;
   prefs.produtosClicados = [
@@ -91,7 +91,7 @@ export function calcularScore(
   if (catClicks > 1) {
     const extra = Math.min(catClicks - 1, 4) * 0.5;
     score += extra;
-    partes.push(`+${extra.toFixed(1)} por cliques extras (+${extra.toFixed(1)})`);
+    partes.push(`+${extra.toFixed(1)} por cliques extras`);
   }
 
   return {

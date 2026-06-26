@@ -1,56 +1,69 @@
-# Arquitetura — PetRocker 🤘🐾
+# Arquitetura - PetRocker 🤘🐾
 
-## Fluxo da aplicação
+O projeto usa o App Router do Next.js, mas mantém os arquivos de rota pequenos. A lógica visual e de domínio fica em módulos nomeados fora de `app`.
 
-```
- ┌──────────────┐     clica no card      ┌──────────────────┐
- │  Catálogo    │ ──────────────────────→ │  Ranqueador IA   │
- │  (page.tsx)  │                         │  (sessionStorage)│
- │              │ ←────────────────────── │  reordena grid   │
- └──────┬───────┘     ordena por score    └──────────────────┘
-        │
-        │ Adicionar ao carrinho
-        ▼
- ┌──────────────┐     Finalizar compra    ┌──────────────────┐
- │   Carrinho   │ ──────────────────────→ │  /api/checkout   │
- │ (carrinho/   │                         │  (POST)          │
- │  page.tsx)   │                         └────────┬─────────┘
- └──────────────┘                                  │
-                                                    │ retorna { url,
-                                                    │   pedidoId, total }
-                                                    ▼
-                                           ┌─────────────────────────────────────┐
-                                           │ INFINITEPAY_HANDLE configurado?     │
-                                           │  Sim ─→ redireciona para URL do     │
-                                           │          InfinitePay (checkout.     │
-                                           │          infinitepay.com.br)        │
-                                           │          ─→ após pagamento →        │
-                                           │            /obrigado                │
-                                           │                                     │
-                                           │  Não ─→ retorna                     │
-                                           │          "/checkout-simulado"       │
-                                           └────────────────┬────────────────────┘
-                                                            │
-                                                            ▼
-                                                   ┌──────────────────┐
-                                                   │    Obrigado      │
-                                                   │ (obrigado/       │
-                                                   │  page.tsx)       │
-                                                   └──────────────────┘
+## Estrutura
+
+```text
+app/
+  api/checkout/route.ts
+  carrinho/page.tsx
+  checkout-simulado/page.tsx
+  produtos/[id]/page.tsx
+  page.tsx
+components/
+  layout/Header.tsx
+contexts/
+  CartContext.tsx
+data/
+  products.ts
+features/
+  cart/CartPage.tsx
+  catalog/PersonalizedCatalog.tsx
+  checkout/SimulatedCheckoutPage.tsx
+  home/HomePage.tsx
+  products/ProductDetailsPage.tsx
+services/
+  productRanker.ts
+types/
+  index.ts
 ```
 
-## Onde o componente de IA se encaixa
+## Regras de organização
 
-O **Ranqueador Inteligente** (`lib/ranqueador.ts` + `components/CatalogoPersonalizado.tsx`) atua diretamente na página inicial, interceptando os cliques do usuário nos cards do catálogo. Ele não interfere no fluxo de compra (carrinho → checkout → obrigado), mas influencia a descoberta de produtos ao reordenar o grid conforme as preferências implícitas do usuário.
+- `app`: somente rotas, layout global e endpoints.
+- `features`: telas e componentes ligados a uma área funcional.
+- `components`: componentes compartilhados entre features.
+- `contexts`: estado global de UI/aplicação.
+- `data`: dados estáticos e seeds.
+- `services`: regras de negócio e funções reutilizáveis.
+- `types`: contratos TypeScript compartilhados.
 
-Quando o usuário ativa o modo "Ver por relevância", o ranqueador calcula scores e reordena o grid. O fluxo de compra permanece inalterado — o ranqueador atua apenas na camada de apresentação do catálogo.
+## Fluxo principal
 
-## Lista de rotas
+```text
+HomePage
+  -> PersonalizedCatalog
+  -> ProductDetailsPage
+  -> CartPage
+  -> POST /api/checkout
+  -> InfinitePay ou SimulatedCheckoutPage
+  -> ThankYouPage
+```
 
-| Rota | Tipo | Descrição |
-|------|------|-----------|
-| `/` | Estática | Página inicial com catálogo e hero section |
-| `/carrinho` | Estática | Carrinho de compras com itens, quantidades e total |
-| `/checkout-simulado` | Estática | Formulário de checkout (Nome, E-mail, CPF, pagamento) |
-| `/obrigado` | Estática | Confirmação de pedido realizado |
-| `POST /api/checkout` | Dinâmica (API) | Gera pedidoId e retorna URL do checkout simulado |
+## Ranqueador inteligente
+
+O ranqueador fica em `services/productRanker.ts`. Ele grava preferências no `sessionStorage`, calcula scores por categoria/produto clicado e entrega a lista ordenada para `features/catalog/PersonalizedCatalog.tsx`.
+
+O fluxo de compra não depende do ranqueador; ele atua apenas na apresentação do catálogo.
+
+## Rotas
+
+| Rota | Descrição |
+|------|-----------|
+| `/` | Página inicial com hero, categorias, destaques e catálogo |
+| `/produtos/[id]` | Detalhe do produto |
+| `/carrinho` | Carrinho de compras |
+| `/checkout-simulado` | Checkout local usado quando não há `INFINITEPAY_HANDLE` |
+| `/obrigado` | Confirmação de pedido |
+| `POST /api/checkout` | Cria pedido e retorna URL de pagamento |

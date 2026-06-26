@@ -2,10 +2,10 @@
 
 import {
   createContext,
-  useContext,
-  useState,
   useCallback,
+  useContext,
   useMemo,
+  useState,
   type ReactNode,
 } from "react";
 import type { Produto } from "@/types";
@@ -33,6 +33,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const adicionar = useCallback((produto: Produto) => {
     setItems((prev) => {
       const existente = prev.find((i) => i.produto.id === produto.id);
+
       if (existente) {
         return prev.map((i) =>
           i.produto.id === produto.id
@@ -40,6 +41,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             : i,
         );
       }
+
       return [...prev, { produto, quantidade: 1 }];
     });
   }, []);
@@ -51,13 +53,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const atualizarQuantidade = useCallback((id: string, quantidade: number) => {
     if (quantidade <= 0) {
       setItems((prev) => prev.filter((i) => i.produto.id !== id));
-    } else {
-      setItems((prev) =>
-        prev.map((i) =>
-          i.produto.id === id ? { ...i, quantidade } : i,
-        ),
-      );
+      return;
     }
+
+    setItems((prev) =>
+      prev.map((i) => (i.produto.id === id ? { ...i, quantidade } : i)),
+    );
   }, []);
 
   const limpar = useCallback(() => {
@@ -93,8 +94,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
 export function useCart() {
   const context = useContext(CartContext);
+
   if (!context) {
     throw new Error("useCart deve ser usado dentro de um CartProvider");
   }
+
   return context;
 }

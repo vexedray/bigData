@@ -6,4 +6,5 @@ export interface Produto {
   descricao: string;
   emoji: string;
   emEstoque: boolean;
+  especificacoes: { chave: string; valor: string }[];
 }

@@ -1,0 +1,155 @@
+.page {
+  @apply min-h-screen flex flex-col pt-24;
+}
+
+.main {
+  @apply flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8;
+}
+
+.title {
+  @apply text-2xl font-bold mb-8;
+}
+
+.emptyPage {
+  @apply min-h-screen flex flex-col pt-24;
+}
+
+.emptyMain {
+  @apply flex-1 flex flex-col items-center justify-center gap-4 px-4;
+}
+
+.emptyEmoji {
+  @apply text-6xl;
+}
+
+.emptyTitle {
+  @apply text-2xl font-bold;
+}
+
+.emptyText {
+  @apply text-gray-400;
+}
+
+.emptyBtn {
+  @apply mt-4 inline-block rounded-lg bg-red-800 hover:bg-red-700 px-6 py-3 text-sm font-semibold transition-colors;
+}
+
+.itemList {
+  @apply space-y-4;
+}
+
+.item {
+  @apply flex items-center gap-4 rounded-xl bg-gray-800 border border-gray-700 p-4;
+}
+
+.itemEmoji {
+  @apply text-4xl;
+}
+
+.itemInfo {
+  @apply flex-1 min-w-0;
+}
+
+.itemNome {
+  @apply font-semibold truncate;
+}
+
+.itemPreco {
+  @apply text-sm text-gray-400;
+}
+
+.qtyControls {
+  @apply flex items-center gap-2;
+}
+
+.qtyBtn {
+  @apply rounded bg-gray-700 hover:bg-gray-600 w-8 h-8 flex items-center justify-center text-sm font-bold transition-colors;
+}
+
+.qtyValue {
+  @apply w-8 text-center font-semibold;
+}
+
+.itemTotal {
+  @apply font-bold text-red-400 min-w-[90px] text-right;
+}
+
+.removeBtn {
+  @apply text-gray-500 hover:text-red-400 transition-colors text-lg;
+}
+
+.cupomBox {
+  @apply mt-8 rounded-xl bg-gray-800 border border-gray-700 p-6 space-y-3;
+}
+
+.cupomRow {
+  @apply flex items-center gap-3;
+}
+
+.cupomInput {
+  @apply flex-1 rounded-lg bg-gray-700 border border-gray-600 px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-800;
+}
+
+.cupomBtn {
+  @apply rounded-lg bg-red-800 hover:bg-red-700 px-4 py-2 text-sm font-semibold transition-colors shrink-0;
+}
+
+.cupomSuccess {
+  @apply text-sm text-green-400;
+}
+
+.cupomError {
+  @apply text-sm text-red-400;
+}
+
+.totalBox {
+  @apply mt-4 rounded-xl bg-gray-800 border border-gray-700 p-6 space-y-2;
+}
+
+.totalRow {
+  @apply flex items-center justify-between text-lg;
+}
+
+.totalLabel {
+  @apply font-semibold;
+}
+
+.totalValue {
+  @apply text-gray-300;
+}
+
+.discountLabel {
+  @apply font-semibold text-green-400;
+}
+
+.discountValue {
+  @apply text-green-400;
+}
+
+.grandTotalRow {
+  @apply border-t border-gray-700 pt-2 flex items-center justify-between text-lg;
+}
+
+.grandTotalLabel {
+  @apply font-bold;
+}
+
+.grandTotalValue {
+  @apply font-bold text-xl text-red-400;
+}
+
+.actions {
+  @apply mt-8 flex flex-col sm:flex-row gap-4;
+}
+
+.continueBtn {
+  @apply flex-1 text-center rounded-lg border border-gray-600 hover:bg-gray-800 px-6 py-3 text-sm font-semibold transition-colors;
+}
+
+.checkoutBtn {
+  @apply flex-1 rounded-lg bg-red-800 hover:bg-red-700 disabled:bg-gray-700 disabled:text-gray-500 px-6 py-3 text-sm font-semibold transition-colors;
+}
+
+.errorMsg {
+  @apply mt-4 text-sm text-red-400 text-center;
+}
