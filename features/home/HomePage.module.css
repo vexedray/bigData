@@ -131,7 +131,7 @@
 }
 
 .promoBtn {
-  @apply mt-4 inline-block rounded-lg bg-red-800 hover:bg-red-700 px-6 py-2.5 text-sm font-semibold transition-colors;
+  @apply mt-4 inline-block rounded-lg bg-blue-600 hover:bg-blue-700 px-6 py-2.5 text-sm font-semibold transition-colors;
 }
 
 .destaques {
